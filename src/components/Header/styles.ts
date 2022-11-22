@@ -24,7 +24,8 @@ export const Content = styled.div`
       color: #fff;
       font-weight: 400;
       font-size: 16px;
-      line-height: 150%;
+      opacity: 0.9;
+      margin-top: 6px;
     }
   }
 
