@@ -106,8 +106,47 @@ export const OrderDetails = styled.div`
         }
       }
     }
+  }
+
+  .total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 24px;
+
+        span {
+          font-weight: 500;
+          font-size: 14px;
+          opacity: 0.8;
+        }
+      }
+`
 
 
+export const Actions = styled.footer`
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+
+  .primary {
+    background: #333;
+    border-radius: 48px;
+    border: 0px;
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .secondary {
+    padding: 14px 24px;
+    color: #D73035;
+    font-weight: bold;
+    border: 0px;
+    background: transparent;
+    margin-top: 12px;
   }
 
 `

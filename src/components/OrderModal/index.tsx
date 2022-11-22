@@ -1,27 +1,47 @@
+import { useEffect } from 'react'
 import closeIcon from '../../assets/images/close-icon.svg'
 import { Order } from '../../types/Order'
 import { formatCurrency } from '../../utils/formatCurrency'
-import { Overlay, ModalBody, OrderDetails } from './styles'
+import { Overlay, ModalBody, OrderDetails, Actions } from './styles'
 
 interface OrderModalProps {
   visible: boolean
   order: Order | null
+  onClose: () => void
 }
 
-export function OrderModal({ visible, order }: OrderModalProps){
+export function OrderModal({ visible, order, onClose }: OrderModalProps){
+
+  useEffect(() => {
+    document.addEventListener('keydown', (event) => {
+      if(event.key === 'Escape'){
+        onClose()
+      }
+    })
+  }, [])
+
 
   if(!visible || !order){
     return null
   }
 
+  // realizando o calculo para saber o valor total do meu pedido
+  // o caálculo basicamente vai ser multiplicar a quantidade de itens pelo valor unitário
+  // e se necessário somar quando tiver mais itens no meu pedido
 
+  /***
+   * acc inicia valendo 0
+  */
+  const total = order.products.reduce((total, { product, quantity }) => {
+    return total + (product.price * quantity)
+  }, 0)
 
   return (
     <Overlay>
       <ModalBody>
         <header>
           <strong>Mesa {order.table}</strong>
-          <button type='button'>
+          <button type='button' onClick={onClose}>
             <img src={closeIcon}/>
           </button>
         </header>
@@ -67,10 +87,29 @@ export function OrderModal({ visible, order }: OrderModalProps){
 
               </div>
             ))}
-
           </div>
 
+          <div className="total">
+            <span>Total</span>
+            <strong>{formatCurrency(total)}</strong>
+          </div>
+
+
         </OrderDetails>
+
+        <Actions>
+          <button type='button' className='primary'>
+            <span>🧑‍🍳</span>
+            <strong>Iniciar produção</strong>
+          </button>
+
+          <button type='button' className='secondary'>
+
+            <strong>Cancelar pedido</strong>
+          </button>
+
+
+        </Actions>
 
       </ModalBody>
     </Overlay>
