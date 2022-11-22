@@ -82,7 +82,6 @@ export function OrdersBoard ({ icon, title, orders, onCancelOrder, onChangeStatu
               ): (
                 <span>{order.products.length} item</span>
               )}
-              {/* <span>{order.products.length} itens</span> */}
             </button>
           ))}
         </OrdersContainer>
