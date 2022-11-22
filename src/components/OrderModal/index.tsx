@@ -13,12 +13,18 @@ interface OrderModalProps {
 export function OrderModal({ visible, order, onClose }: OrderModalProps){
 
   useEffect(() => {
-    document.addEventListener('keydown', (event) => {
+
+    function handleKeyDown(event: KeyboardEvent) {
       if(event.key === 'Escape'){
         onClose()
       }
-    })
-  }, [])
+    }
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onClose])
 
 
   if(!visible || !order){
