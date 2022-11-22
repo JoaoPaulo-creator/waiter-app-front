@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import closeIcon from '../../assets/images/close-icon.svg'
-import { Order } from '../../types/Order'
+import { Order } from '../../interfaces/Order'
+import { localHostWithPort } from '../../utils/api'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { Overlay, ModalBody, OrderDetails, Actions } from './styles'
 
@@ -8,9 +9,12 @@ interface OrderModalProps {
   visible: boolean
   order: Order | null
   onClose: () => void
+  onCancelOrder: () => void
+  isLoading: boolean
+  onChangeStatus: () => void
 }
 
-export function OrderModal({ visible, order, onClose }: OrderModalProps){
+export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading, onChangeStatus }: OrderModalProps){
 
   useEffect(() => {
 
@@ -48,7 +52,7 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps){
         <header>
           <strong>Mesa {order.table}</strong>
           <button type='button' onClick={onClose}>
-            <img src={closeIcon}/>
+            <img src={closeIcon} alt='ícone de fechar modal'/>
           </button>
         </header>
 
@@ -78,7 +82,7 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps){
             {order.products.map(({ _id, product, quantity  }) => (
               <div className='item' key={_id}>
                 <img
-                  src={`http://localhost:3001/uploads/${product.imagePath}`}
+                  src={`http://${localHostWithPort}/uploads/${product.imagePath}`}
                   alt={product.name}
                   width='56'
                   height='28.51'
@@ -99,24 +103,26 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps){
             <span>Total</span>
             <strong>{formatCurrency(total)}</strong>
           </div>
-
-
         </OrderDetails>
 
         <Actions>
-          <button type='button' className='primary'>
-            <span>🧑‍🍳</span>
-            <strong>Iniciar produção</strong>
+          {order.status !== 'DONE' && (
+            <button type='button' className='primary' disabled={isLoading} onClick={onChangeStatus}>
+              <span>
+                {order.status === 'WAITING' && '🧑‍🍳'}
+                {order.status === 'IN_PRODUCTION' && '✅'}
+              </span>
+              <span>
+                {order.status === 'WAITING' && 'Iniciar Produção'}
+                {order.status === 'IN_PRODUCTION' && 'Concluir Pedido'}
+              </span>
+            </button>
+          )}
+
+          <button type='button' className='secondary' onClick={onCancelOrder} disabled={isLoading}>
+            <span>{order.status !== 'DONE' ? 'Cancelar Pedido' : 'Limpar'}</span>
           </button>
-
-          <button type='button' className='secondary'>
-
-            <strong>Cancelar pedido</strong>
-          </button>
-
-
         </Actions>
-
       </ModalBody>
     </Overlay>
   )
