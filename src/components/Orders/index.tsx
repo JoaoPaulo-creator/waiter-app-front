@@ -48,7 +48,7 @@ export function Orders(){
       <OrdersBoard
         icon="🕒"
         title="Fila de espera"
-        orders={waiting}
+        orders={orders}
         onCancelOrder={handleCancelOrder}
         onChangeStatus={handleOrderStatusChange}
       />

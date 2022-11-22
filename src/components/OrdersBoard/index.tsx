@@ -77,7 +77,12 @@ export function OrdersBoard ({ icon, title, orders, onCancelOrder, onChangeStatu
           {orders.map((order) => (
             <button type='button' key={order._id} onClick={() => handleOpenModal(order)}>
               <strong>Mesa {order.table}</strong>
-              <span>{order.products.length} itens</span>
+              {order.products.length > 1 ? (
+                <span>{order.products.length} itens</span>
+              ): (
+                <span>{order.products.length} item</span>
+              )}
+              {/* <span>{order.products.length} itens</span> */}
             </button>
           ))}
         </OrdersContainer>
