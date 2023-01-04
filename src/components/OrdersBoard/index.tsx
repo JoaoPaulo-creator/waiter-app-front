@@ -81,14 +81,11 @@ export function OrdersBoard ({ icon, title, orders, onCancelOrder, onChangeStatu
               onClick={() => handleOpenModal(order)}
             >
               <strong>Mesa {order.table}</strong>
-
-
               {order.products.length > 1 ? (
                 <span>{order.products.length} itens</span>
               ): (
                 <span>{order.products.length} item</span>
               )}
-
             </button>
           ))}
         </OrdersContainer>
