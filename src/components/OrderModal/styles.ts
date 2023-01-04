@@ -84,6 +84,8 @@ export const OrderDetails = styled.div`
 
       img {
         border-radius: 6px;
+        height: 50%;
+        width: 40%;
       }
 
       .quantity {
