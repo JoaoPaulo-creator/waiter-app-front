@@ -36,13 +36,18 @@ export const OrdersContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 4px;
+    transform: background 0.2s ease-in;
+
+    &:hover{
+      background: #ddd;
+    }
 
     strong {
       font-weight: 500;
     }
 
     span {
-      font-size: 14px;
+    font-size: 14px;
       color: #666;
     }
 
